@@ -17,6 +17,9 @@ class Tile {
       case "food":
         fill(255, 0, 0);
         break;
+      case "stone":
+        fill(79, 55, 55);
+        break;
       default:
         fill(79, 55, 55);
         break;

@@ -39,6 +39,25 @@ function drawGrid() {
       }
     }
   }
+
+  grid[100].type = "stone";
+  grid.filter(
+    (tile) => tile.x === grid[100].x + tileSize && tile.y === grid[100].y
+  )[0].type = "stone";
+  grid.filter(
+    (tile) => tile.x === grid[100].x - tileSize && tile.y === grid[100].y
+  )[0].type = "stone";
+  grid.filter(
+    (tile) => tile.x === grid[100].x && tile.y === grid[100].y + tileSize
+  )[0].type = "stone";
+  grid.filter(
+    (tile) => tile.x === grid[100].x && tile.y === grid[100].y - tileSize
+  )[0].type = "stone";
+  //   for (i = 0; i < 10; i++) {
+  //     let grasses = grid.filter((tile) => tile.type === "grass");
+  //     let randomGrass = random(grasses);
+  //     randomGrass.type = "stone";
+  //   }
 }
 
 function randomTile() {
