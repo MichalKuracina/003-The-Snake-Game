@@ -3,80 +3,112 @@ let grid = [];
 let snake;
 
 function setup() {
-  createCanvas(600, 600);
-  frameRate(2);
-  drawGrid();
+    createCanvas(600, 600);
+    frameRate(2);
+    drawGrid();
 
-  snake = new Snake(240, 300, tileSize, "snake", createVector(1, 0));
+    snake = new Snake(420, 300, tileSize, "snake", createVector(1, 0));
 
-  grid.push(new Tile(300, 300, tileSize, "food"));
-  //   grid.push(new Tile(randomTile().x, randomTile().y, tileSize, "food"));
+    // grid.push(new Tile(480, 300, tileSize, "food"));
+    //   grid.push(new Tile(randomTile().x, randomTile().y, tileSize, "food"));
+
+    // randomTile().type = "food";
+
+    // console.log(grid.filter((tile) => tile.x === 460 && tile.y === 300)); //.type = "food";
+    // grid.filter((tile) => tile.x === 460 && tile.y === 300).type = "food";
+    // console.log(grid.filter((tile) => tile.x === 460 && tile.y === 300)); //.type = "food";
+    // console.log(randomTile());
+    // grid[randomTile()].type = "food";
+
+    let tttul = grid.findIndex((t) => t.x === 460 && t.y === 300);
+    grid[tttul].type = "food";
 }
 
 function draw() {
-  background(206, 217, 180);
+    background(206, 217, 180);
 
-  grid.forEach((tile) => {
-    tile.show();
-  });
+    grid.forEach((tile) => {
+        tile.show();
+    });
 
-  snake.update();
-  snake.show();
+    snake.update();
+    snake.show();
 }
 
 function drawGrid() {
-  for (let x = 0; x < width; x += tileSize) {
-    for (let y = 0; y < height; y += tileSize) {
-      if (
-        x === 0 ||
-        x + tileSize === width ||
-        y === 0 ||
-        y + tileSize === height
-      ) {
-        grid.push(new Tile(x, y, tileSize, "wall"));
-      } else {
-        grid.push(new Tile(x, y, tileSize, "grass"));
-      }
+    for (let x = 0; x < width; x += tileSize) {
+        for (let y = 0; y < height; y += tileSize) {
+            if (x === 0 || x + tileSize === width || y === 0 || y + tileSize === height) {
+                grid.push(new Tile(x, y, tileSize, "wall"));
+            } else {
+                grid.push(new Tile(x, y, tileSize, "grass"));
+            }
+        }
     }
-  }
 
-  grid[100].type = "stone";
-  grid.filter(
-    (tile) => tile.x === grid[100].x + tileSize && tile.y === grid[100].y
-  )[0].type = "stone";
-  grid.filter(
-    (tile) => tile.x === grid[100].x - tileSize && tile.y === grid[100].y
-  )[0].type = "stone";
-  grid.filter(
-    (tile) => tile.x === grid[100].x && tile.y === grid[100].y + tileSize
-  )[0].type = "stone";
-  grid.filter(
-    (tile) => tile.x === grid[100].x && tile.y === grid[100].y - tileSize
-  )[0].type = "stone";
-  //   for (i = 0; i < 10; i++) {
-  //     let grasses = grid.filter((tile) => tile.type === "grass");
-  //     let randomGrass = random(grasses);
-  //     randomGrass.type = "stone";
-  //   }
+    addObstacle("stone");
+    addObstacle("rock");
+    addObstacle("tree");
+}
+
+function addObstacle(type) {
+    let br, ul, ur;
+    let rndTile = randomTile();
+
+    switch (type) {
+        case "stone":
+            rndTile.type = "stone";
+            break;
+        case "rock":
+            br = grid.findIndex((t) => t.x === rndTile.x + tileSize && t.y === rndTile.y);
+
+            ul = grid.findIndex((t) => t.x === rndTile.x && t.y === rndTile.y - tileSize);
+
+            ur = grid.findIndex((t) => t.x === rndTile.x + tileSize && t.y === rndTile.y - tileSize);
+
+            if (grid[ul].type !== "grass" || grid[ur].type !== "grass" || grid[br].type !== "grass") {
+                addObstacle(type);
+            } else {
+                rndTile.type = "rock";
+                grid[br].type = "rock";
+                grid[ul].type = "rock";
+                grid[ur].type = "rock";
+            }
+            break;
+        case "tree":
+            ul = grid.findIndex((t) => t.x === rndTile.x && t.y === rndTile.y - tileSize);
+
+            ur = grid.findIndex((t) => t.x === rndTile.x && t.y === rndTile.y - tileSize - tileSize);
+
+            if (grid[ul].type !== "grass" || grid[ur].type !== "grass") {
+                addObstacle(type);
+            } else {
+                rndTile.type = "tree";
+                grid[ul].type = "tree";
+                grid[ur].type = "tree";
+            }
+            break;
+        default:
+            rndTile.type = "stone";
+            break;
+    }
 }
 
 function randomTile() {
-  let playableTiles = grid.filter(
-    (tile) => tile.type === "grass" && tile.type !== "wall"
-  );
-  return random(playableTiles);
+    let playableTiles = grid.filter((tile) => tile.type === "grass" && tile.type !== "wall");
+    return random(playableTiles);
 }
 
 function keyPressed() {
-  if (keyIsPressed === true) {
-    if (keyCode === 38) {
-      snake.changeDirection(createVector(0, -1));
-    } else if (keyCode === 40) {
-      snake.changeDirection(createVector(0, 1));
-    } else if (keyCode === 37) {
-      snake.changeDirection(createVector(-1, 0));
-    } else if (keyCode === 39) {
-      snake.changeDirection(createVector(1, 0));
+    if (keyIsPressed === true) {
+        if (keyCode === 38) {
+            snake.changeDirection(createVector(0, -1));
+        } else if (keyCode === 40) {
+            snake.changeDirection(createVector(0, 1));
+        } else if (keyCode === 37) {
+            snake.changeDirection(createVector(-1, 0));
+        } else if (keyCode === 39) {
+            snake.changeDirection(createVector(1, 0));
+        }
     }
-  }
 }
