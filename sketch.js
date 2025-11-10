@@ -1,27 +1,19 @@
 let tileSize = 20;
 let grid = [];
 let snake;
+let frameRateValue = 2;
+let foodCount = 3;
 
-function setup() {
+async function setup() {
     createCanvas(600, 600);
-    frameRate(2);
+    frameRate(frameRateValue);
     drawGrid();
 
     snake = new Snake(420, 300, tileSize, "snake", createVector(1, 0));
 
-    // grid.push(new Tile(480, 300, tileSize, "food"));
-    //   grid.push(new Tile(randomTile().x, randomTile().y, tileSize, "food"));
-
-    // randomTile().type = "food";
-
-    // console.log(grid.filter((tile) => tile.x === 460 && tile.y === 300)); //.type = "food";
-    // grid.filter((tile) => tile.x === 460 && tile.y === 300).type = "food";
-    // console.log(grid.filter((tile) => tile.x === 460 && tile.y === 300)); //.type = "food";
-    // console.log(randomTile());
-    // grid[randomTile()].type = "food";
-
-    let tttul = grid.findIndex((t) => t.x === 460 && t.y === 300);
-    grid[tttul].type = "food";
+    for (let i = 0; i < foodCount; i++) {
+        randomTile().type = "food";
+    }
 }
 
 function draw() {
@@ -47,7 +39,15 @@ function drawGrid() {
     }
 
     addObstacle("stone");
+    addObstacle("stone");
+    addObstacle("stone");
+    addObstacle("stone");
+    addObstacle("stone");
     addObstacle("rock");
+    addObstacle("rock");
+    addObstacle("rock");
+    addObstacle("tree");
+    addObstacle("tree");
     addObstacle("tree");
 }
 
@@ -95,7 +95,7 @@ function addObstacle(type) {
 }
 
 function randomTile() {
-    let playableTiles = grid.filter((tile) => tile.type === "grass" && tile.type !== "wall");
+    let playableTiles = grid.filter((tile) => tile.type === "grass" && tile.type !== "wall" && tile.type !== "stone" && tile.type !== "rock" && tile.type !== "tree");
     return random(playableTiles);
 }
 
