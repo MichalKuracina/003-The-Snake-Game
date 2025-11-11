@@ -54,25 +54,21 @@ class Snake {
 
     show() {
         let headBorderSize = 2;
-        let tailLength = this.body.length;
         for (let i = 0; i < this.body.length; i++) {
-            if (i === 0) {
-                // head
-                fill(0, 0, 0);
-                fill("rgba(0, 0, 0, " + this.remapAplha(tailLength, i) + ")");
-                rect(this.body[i].x, this.body[i].y, this.tileSize, this.tileSize);
-                fill(250, 0, 0);
-                rect(this.body[i].x + headBorderSize, this.body[i].y + headBorderSize, this.tileSize - headBorderSize * 2, this.tileSize - headBorderSize * 2);
-            } else {
-                fill(0, 0, 0);
-                rect(this.body[i].x, this.body[i].y, this.tileSize, this.tileSize);
-            }
+            fill(0, 0, 0);
+            circle(this.body[i].x + this.tileSize / 2, this.body[i].y + this.tileSize / 2, this.tileSize);
+            fill(27, 115, 24);
+            circle(this.body[i].x + this.tileSize / 2, this.body[i].y + this.tileSize / 2, this.tileSize - headBorderSize);
             strokeWeight(0.1);
             stroke(0, 0, 0);
-        }
-    }
 
-    remapAplha(tailLength, index) {
-        return (1 / (tailLength - (tailLength - index))) * 1.5;
+            if (i === 0) {
+                fill(250, 250, 0);
+                circle(this.body[i].x + 5, this.body[i].y + 6, 4);
+                circle(this.body[i].x + 14, this.body[i].y + 6, 4);
+                fill(250, 0, 0);
+                arc(this.body[i].x + 10, this.body[i].y + 12, this.tileSize / 2, this.tileSize / 2, 0, PI);
+            }
+        }
     }
 }

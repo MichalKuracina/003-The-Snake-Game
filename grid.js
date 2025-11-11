@@ -9,30 +9,32 @@ class Tile {
     show() {
         switch (this.type) {
             case "grass":
-                fill(170, 204, 151);
+                image(spritesCollection.grass, this.x, this.y);
                 break;
             case "wall":
                 fill(79, 55, 55);
+                rect(this.x, this.y, this.tileSize, this.tileSize);
+                strokeWeight(0);
+                stroke(0, 0, 0);
                 break;
             case "food":
-                fill(255, 0, 0);
+                image(spritesCollection.food, this.x, this.y);
                 break;
             case "stone":
-                fill(79, 55, 55);
+                image(spritesCollection.stone, this.x, this.y);
                 break;
             case "rock":
-                fill(99, 8, 43);
+                image(spritesCollection.stone, this.x, this.y);
                 break;
             case "tree":
-                fill(24, 186, 70);
+                image(spritesCollection.stone, this.x, this.y);
                 break;
             default:
                 fill(79, 55, 55);
+                rect(this.x, this.y, this.tileSize, this.tileSize);
+                strokeWeight(0.1);
+                stroke(0, 0, 0);
                 break;
         }
-
-        rect(this.x, this.y, this.tileSize, this.tileSize);
-        strokeWeight(0.1);
-        stroke(0, 0, 0);
     }
 }

@@ -3,13 +3,25 @@ let grid = [];
 let snake;
 let frameRateValue = 2;
 let foodCount = 3;
+let spritesheet;
+let spritesCollection = {};
 
 async function setup() {
+    spritesheet = await loadImage("/assets/art3.png");
+    spritesCollection = {
+        stone: spritesheet.get(0, 0, 20, 20),
+        rock: spritesheet.get(20, 0, 40, 40),
+        tree: spritesheet.get(0, 20, 20, 60),
+        food: spritesheet.get(20, 40, 20, 20),
+        grass: spritesheet.get(40, 40, 20, 20),
+        wall: spritesheet.get(20, 60, 100, 20),
+    };
+
     createCanvas(600, 600);
     frameRate(frameRateValue);
     drawGrid();
 
-    snake = new Snake(420, 300, tileSize, "snake", createVector(1, 0));
+    snake = new Snake(280, 300, tileSize, "snake", createVector(1, 0));
 
     for (let i = 0; i < foodCount; i++) {
         randomTile().type = "food";
