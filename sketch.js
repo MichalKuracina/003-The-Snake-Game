@@ -7,7 +7,7 @@ let spritesheet;
 let spritesCollection = {};
 
 async function setup() {
-    spritesheet = await loadImage("/assets/art3.png");
+    spritesheet = await loadImage(".../assets/art3.png");
     spritesCollection = {
         stone: spritesheet.get(0, 0, 20, 20),
         rock: spritesheet.get(20, 0, 40, 40),
